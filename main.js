@@ -62,8 +62,9 @@ async function showForecast(url) {
 
             //Link zum Datendownload
             content += `
-<p><a href="${url}" target="met.no">Daten downloaden</a></p>
-`
+                <p><a href="${url}" target="met.no">Daten downloaden</a></p>
+            `;
+
             L.popup(latlng, {
                 content: content
             }).openOn(themaLayer.forecast);
@@ -71,3 +72,10 @@ async function showForecast(url) {
     }).addTo(themaLayer.forecast);
 }
 showForecast("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=47.267222&lon=11.392778");
+
+// auf Kartenklick reagieren
+map.on("click", function (evt) {
+    //console.log(evt);
+    //console.log(evt.latlng.lat, evt.latlng.lng);
+    showForecast(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${evt.latlng.lat}&lon=${evt.latlng.lng}`);
+});
